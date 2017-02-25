@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Weather Central</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+
+	<!-- Favicon -->
+	<link rel="shortcut icon" href="img/icon.png"/>
+	
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+</h:head>
+<h:body>
+	<nav class="navbar navbar-default">
+	  	<script>
+			$(function() {
+				$("nav").load("navbar.html")
+			});
+		</script>
+	</nav>
+	<div class="container">
+		<div class="row">
+			<h1>Locations</h1>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<h:form class="form-inline">
+					<h:dataTable class="table table-striped" value="#{locationBackingBean.locationList}" var="location">
+					   <h:column>
+					      <f:facet name="header">Name</f:facet>
+					      #{location.name}
+					   </h:column>
+					   <h:column>
+					      <f:facet name="header">Actions</f:facet>
+					      <h:commandLink type="button" class="btn btn-danger" value="Delete" action="#{locationBackingBean.deleteLocation(location)}"/>
+					   </h:column>
+					</h:dataTable>
+				</h:form>
+				<h:form class="form-inline">
+					<h:outputLabel class="control-label" value="Add a new location:"/>
+					<h:inputText class="form-control" value="#{locationBackingBean.createName}"/>
+					<h:commandButton class="btn btn-success" action="#{locationBackingBean.createLocation}" value="Create"/>
+				</h:form>
+				<h:form class="form-inline">
+					<h:outputLabel class="control-label" value="Update location:"/>
+					<h:selectOneMenu class="form-control" value="#{locationBackingBean.updateLocationId}">
+						<f:selectItems value="#{locationBackingBean.locationList}" var="location" itemValue="#{location.id}" itemLabel="#{location.name}"/>
+			   		</h:selectOneMenu>
+					<h:inputText class="form-control" value="#{locationBackingBean.updateName}"/>
+					<h:commandButton class="btn btn-primary" action="#{locationBackingBean.updateLocation}" value="Update"/>
+				</h:form>
+			</div>
+		</div>
+	</div>
+</h:body>
+</html>
